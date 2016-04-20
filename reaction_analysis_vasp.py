@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 import numpy as np
 
@@ -64,15 +64,15 @@ def make_pf_phva(mapname, lot_sp):
     return PartFun(nma, [Vibrations(freq_scaling=1.0, zp_scaling=1.0)])
 
 
-def get_pfs_from_mapnames(mapnames):
+def get_pfs_from_mapnames(mapnames, lot_sp):
     pfs = []
     for mapname in mapnames:
         if mapname.startswith('gas_'):
-            pfs.append(make_pf_gas(mapname))
+            pfs.append(make_pf_gas(mapname, lot_sp))
         elif mapname.startswith('full_'):
-            pfs.append(make_pf_full(mapname))
+            pfs.append(make_pf_full(mapname, lot_sp))
         elif mapname.startswith('phva_'):
-            pfs.append(make_pf_phva(mapname))
+            pfs.append(make_pf_phva(mapname, lot_sp))
         else:
             raise ValueError('Map name should start with gas_, full_ or phva_. Got "%s"' % mapname)
     return pfs
