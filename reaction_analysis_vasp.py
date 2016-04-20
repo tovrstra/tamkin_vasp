@@ -30,7 +30,7 @@ def make_pf_gas(mapname, lot_sp):
     mol = load_molecule_vasp(
         "%s/freq/POSCAR" % mapname,
         "%s/freq/OUTCAR" % mapname,
-        "%s/sp_%s/OUTCAR" % (mapname, lot_sp),
+        None if lot_sp is None else "%s/sp_%s/OUTCAR" % (mapname, lot_sp),
         is_periodic=False)
     nma = NMA(mol, ConstrainExt(1.0e-03))
     print
@@ -42,7 +42,7 @@ def make_pf_full(mapname, lot_sp):
     mol = load_molecule_vasp(
         "%s/freq/POSCAR" % mapname,
         "%s/freq/OUTCAR" % mapname,
-        "%s/sp_%s/OUTCAR" % (mapname, lot_sp),
+        None if lot_sp is None else "%s/sp_%s/OUTCAR" % (mapname, lot_sp),
         is_periodic=True)
     nma = NMA(mol, ConstrainExt(1.0))
     nma.freqs = cleanup_frequencies(nma.freqs)
@@ -55,7 +55,7 @@ def make_pf_phva(mapname, lot_sp):
     mol = load_molecule_vasp(
         "%s/freq/POSCAR" % mapname,
         "%s/freq/OUTCAR" % mapname,
-        "%s/sp_%s/OUTCAR" % (mapname, lot_sp),
+        None if lot_sp is None else "%s/sp_%s/OUTCAR" % (mapname, lot_sp),
         is_periodic=True)
     fixed = load_fixed_vasp("%s/freq/OUTCAR" % mapname)
     nma = NMA(mol, PHVA(fixed))
@@ -140,7 +140,7 @@ def reaction_analysis(react_mapnames, ts_mapname, prod_mapnames, lot_sp, pressur
 
 def main():
     cases = [
-        (["gas_2pentene","phva_emptyO3"], None, ["phva_2-pentyl"], 'revPBE'),
+        (["gas_2pentene","phva_emptyO3"], None, ["phva_2-pentyl"], None),
         (["gas_2pentene","phva_emptyO3"], None, ["phva_3-pentyl"], 'revPBE'),
     ]
 
